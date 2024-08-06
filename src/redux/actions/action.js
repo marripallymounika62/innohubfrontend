@@ -13,118 +13,118 @@ export const fetchStates = () => async (dispatch) => {
     const response = await axios.get('/api/state'); // replace with your API endpoint
     console.log('States data:', response.data);
     dispatch(setStates(response.data));
-    
+
   } catch (error) {
     console.error('Error fetching cities:', error);
   }
 };
 
 export const setCities = (cities) => ({
-    type: ActionTypes.SET_CITIES,
-    payload: cities,
-  });
-  
-  export const fetchCities = (selectedState) => async (dispatch) => {
-    try {
-      const response = await axios.get(`/api/city/${selectedState}`); // replace with your API endpoint
-       console.log("states fetched", (response.data))
-      dispatch(setCities(response.data));
-    } catch (error) {
-      console.error('Error fetching cities:', error);
-    }
-  };
+  type: ActionTypes.SET_CITIES,
+  payload: cities,
+});
 
-  
-  export const setHigherEducation = (higherEducation) => ({
-    type: ActionTypes.SET_HIGHER_EDUCATION,
-    payload: higherEducation,
-  });
-  
-  export const fetchHigherEducation = () => async (dispatch) => {
-    try {
-      const response = await axios.get('/api/degree'); // Replace with your API endpoint
-      dispatch(setHigherEducation(response.data));
-    } catch (error) {
-      console.error('Error fetching higher education:', error);
-    }
-  };
+export const fetchCities = (selectedState) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/city/${selectedState}`); // replace with your API endpoint
+    console.log("states fetched", (response.data))
+    dispatch(setCities(response.data));
+  } catch (error) {
+    console.error('Error fetching cities:', error);
+  }
+};
 
 
-  export const submitForm = (formData) => async (dispatch) => {
-    try {
-      const response = await axios.post('/api/students', formData);
-      dispatch({
-        type: 'SUBMIT_FORM_SUCCESS',
-        payload: response.data,
-      });
-  
-            // After form submission, send an email
+export const setHigherEducation = (higherEducation) => ({
+  type: ActionTypes.SET_HIGHER_EDUCATION,
+  payload: higherEducation,
+});
+
+export const fetchHigherEducation = () => async (dispatch) => {
+  try {
+    const response = await axios.get('/api/degree'); // Replace with your API endpoint
+    dispatch(setHigherEducation(response.data));
+  } catch (error) {
+    console.error('Error fetching higher education:', error);
+  }
+};
+
+
+export const submitForm = (formData) => async (dispatch) => {
+  try {
+    const response = await axios.post('/api/students', formData);
+    dispatch({
+      type: 'SUBMIT_FORM_SUCCESS',
+      payload: response.data,
+    });
+
+    // After form submission, send an email
     await dispatch(sendEmail(formData)); // Assuming email is part of formData
-  
-    } catch (error) {
+
+  } catch (error) {
+    dispatch({
+      type: 'SUBMIT_FORM_ERROR',
+      payload: error,
+    });
+
+    console.error('Error submitting form:', error);
+  }
+};
+export const resetForm = () => ({
+  type: "RESET_FORM",
+});
+
+
+export const adminLogin = (username, password) => async (dispatch) => {
+  try {
+    // Make HTTP POST request to login endpoint
+    const response = await axios.post('/api/login', { username, password });
+
+    // Log the entire response for debugging
+    console.log('Response:', response.data);
+
+    // Extract message, token, and role from response data
+    const { message, token, role } = response.data;
+
+    // Log token and role for debugging
+    console.log('Token:', token);
+    console.log('Role:', role);
+
+    // Check if login was successful
+    if (message === 'Superadmin login successful' || message === 'Login successful') {
+      // Store token in localStorage
+      if (token) {
+        localStorage.setItem('token', token);
+      }
+
+      // Dispatch action to update Redux state with token and role
       dispatch({
-        type: 'SUBMIT_FORM_ERROR',
-        payload: error,
+        type: 'ADMIN_LOGIN_SUCCESS',
+        payload: { token, role: role || 'user', isSuperadmin: message === 'Superadmin login successful' }
       });
-  
-      console.error('Error submitting form:', error);
+    } else {
+      // Dispatch action for login error
+      dispatch({
+        type: 'ADMIN_LOGIN_ERROR',
+        payload: 'Invalid username or password'
+      });
     }
-  };
-  export const resetForm = () => ({
-    type: "RESET_FORM",
-  });
-  
-  
-  export const adminLogin = (username, password) => async (dispatch) => {
-    try {
-        // Make HTTP POST request to login endpoint
-        const response = await axios.post('/api/login', { username, password });
-        
-        // Log the entire response for debugging
-        console.log('Response:', response.data);
-
-        // Extract message, token, and role from response data
-        const { message, token, role } = response.data;
-
-        // Log token and role for debugging
-        console.log('Token:', token);
-        console.log('Role:', role);
-
-        // Check if login was successful
-        if (message === 'Superadmin login successful' || message === 'Login successful') {
-            // Store token in localStorage
-            if (token) {
-                localStorage.setItem('token', token);
-            }
-
-            // Dispatch action to update Redux state with token and role
-            dispatch({
-                type: 'ADMIN_LOGIN_SUCCESS',
-                payload: { token, role: role || 'user', isSuperadmin: message === 'Superadmin login successful' }
-            });
-        } else {
-            // Dispatch action for login error
-            dispatch({
-                type: 'ADMIN_LOGIN_ERROR',
-                payload: 'Invalid username or password'
-            });
-        }
-    } catch (error) {
-        console.error('Error occurred while logging in:', error);
-        // Dispatch action for login error
-        dispatch({
-            type: 'ADMIN_LOGIN_ERROR',
-            payload: 'Error occurred while logging in'
-        });
-    }
+  } catch (error) {
+    console.error('Error occurred while logging in:', error);
+    // Dispatch action for login error
+    dispatch({
+      type: 'ADMIN_LOGIN_ERROR',
+      payload: 'Error occurred while logging in'
+    });
+  }
 };
 
 export const fetchStudents = () => async (dispatch) => {
   try {
     const response = await axios.get('/api/students');
-    const totalEnrolledStudents = response.data.length; 
-   // console.log('Fetched data:', response.data); 
-    console.log('totalEnrolledStudents     :',totalEnrolledStudents)
+    const totalEnrolledStudents = response.data.length;
+    // console.log('Fetched data:', response.data); 
+    console.log('totalEnrolledStudents     :', totalEnrolledStudents)
     dispatch({
       type: 'FETCH_STUDENTS_SUCCESS',
       payload: response.data,
@@ -135,7 +135,7 @@ export const fetchStudents = () => async (dispatch) => {
       type: 'FETCH_STUDENTS_ERROR',
       payload: error,
     });
-   // console.error('Error fetching students:', error);
+    // console.error('Error fetching students:', error);
   }
 };
 
@@ -168,7 +168,7 @@ export const updateEmailStatus = (student_Id, emailSent) => {
 export const fetchStateById = (id) => async (dispatch) => {
   try {
     const response = await axios.get(`/api/state/${id}`);
-      console.log(response.data,"data");
+    console.log(response.data, "data");
     if (response.status === 200) {
       const stateData = response.data;
       //console.log(stateData,"stateData");
@@ -207,15 +207,15 @@ export const uploadNewState = (newStateData) => async (dispatch) => {
 export const updateStateById = (updateStateData, id) => async (dispatch) => {
   try {
     const response = await axios.put(`/api/state/${id}`, updateStateData);
-    const stateData = response.data; 
+    const stateData = response.data;
     console.error('State updated', stateData);
     toast.success("You have successfully updated State");
     dispatch({
       type: ActionTypes.EDIT_STATE,
       payload: stateData
-    });    
+    });
   } catch (error) {
-    console.error( error);
+    console.error(error);
   }
 };
 
@@ -258,7 +258,7 @@ export const fetchCityList = () => async (dispatch) => {
 export const fetchCityById = (id) => async (dispatch) => {
   try {
     const response = await axios.get(`/api/city/${id}/city`);
-      console.log(response.data,"data");
+    console.log(response.data, "data");
     if (response.status === 200) {
       const cityData = response.data;
       //console.log(cityData,"cityData");
@@ -297,15 +297,15 @@ export const uploadNewCity = (newCityData) => async (dispatch) => {
 export const updateCityById = (updateCityData, id) => async (dispatch) => {
   try {
     const response = await axios.put(`/api/city/${id}/city`, updateCityData);
-    const cityData = response.data; 
+    const cityData = response.data;
     console.error('City updated', cityData);
     toast.success("You have successfully updated City");
     dispatch({
       type: ActionTypes.EDIT_CITY,
       payload: cityData
-    });    
+    });
   } catch (error) {
-    console.error( error);
+    console.error(error);
   }
 };
 
@@ -330,7 +330,7 @@ export const deactivateCity = (cityId) => async (dispatch) => {
 export const fetchEducationById = (id) => async (dispatch) => {
   try {
     const response = await axios.get(`/api/degree/${id}`);
-      console.log(response.data,"data");
+    console.log(response.data, "data");
     if (response.status === 200) {
       const educationData = response.data;
       //console.log(educationData,"educationData");
@@ -369,15 +369,15 @@ export const uploadNewEducation = (newEducationData) => async (dispatch) => {
 export const updateEducationById = (updateEducationData, id) => async (dispatch) => {
   try {
     const response = await axios.put(`/api/degree/${id}`, updateEducationData);
-    const educationData = response.data; 
+    const educationData = response.data;
     console.error('Education updated', educationData);
     toast.success("You have successfully updated Education");
     dispatch({
       type: ActionTypes.EDIT_EDUCATION,
       payload: educationData
-    });    
+    });
   } catch (error) {
-    console.error( error);
+    console.error(error);
   }
 };
 
@@ -409,7 +409,7 @@ export const fetchRoles = () => async (dispatch) => {
     const response = await axios.get('/api/roles');
     // console.log("Roles data", response.data);
     dispatch(setRoles(response.data));
-  } catch(error) {
+  } catch (error) {
     console.error('Error in fetching roles', error)
   }
 };
@@ -490,35 +490,35 @@ export const sendUserForm = (userFormData) => async (dispatch) => {
 
 
 
-export const fetchUsers=()=>async(dispatch)=>{
-  try{
-    const response=await axios.get('/api/usermanage');
-    console.log('Fetched user data:', response.data); 
+export const fetchUsers = () => async (dispatch) => {
+  try {
+    const response = await axios.get('/api/usermanage');
+    console.log('Fetched user data:', response.data);
     dispatch({
-      type:'FETCH_USERS_SUCCESS',
-      payload:response.data,
+      type: 'FETCH_USERS_SUCCESS',
+      payload: response.data,
     });
-  } catch(error){
+  } catch (error) {
     dispatch({
-      type:'FETCH_USERS_ERROR',
-      payload:error
+      type: 'FETCH_USERS_ERROR',
+      payload: error
     });
-    console.error(' error in Fetching user data:', error); 
+    console.error(' error in Fetching user data:', error);
   }
 };
 
 export const updateStudentById = (updateStudentData, id) => async (dispatch) => {
   try {
     const response = await axios.put(`/api/students/${id}`, updateStudentData);
-    const studentData = response.data; 
+    const studentData = response.data;
     console.error('Student updated', studentData);
     toast.success("You have successfully updated Student");
     dispatch({
       type: ActionTypes.EDIT_STUDENT,
       payload: studentData
-    });    
+    });
   } catch (error) {
-    console.error( error);
+    console.error(error);
   }
 };
 
@@ -530,7 +530,7 @@ export const fetchQualified = () => async (dispatch) => {
       const markData = response.data;
       dispatch({
         type: ActionTypes.FETCH_MARK,
-        payload: markData, 
+        payload: markData,
       });
     } else {
       console.error('Unexpected status code:', response.status);
@@ -564,7 +564,7 @@ export const fetchStudentMark = () => async (dispatch) => {
       const markData = response.data;
       dispatch({
         type: ActionTypes.FETCH_STUDENT_MARK,
-        payload: markData, 
+        payload: markData,
       });
     } else {
       console.error('Unexpected status code:', response.status);
@@ -577,7 +577,7 @@ export const fetchStudentMark = () => async (dispatch) => {
 export const sendEmailMark = (studentId) => async (dispatch) => {
   try {
     console.log("Sending email to student:", studentId);
-    const response = await axios.post(`/api/marks/${studentId}`); 
+    const response = await axios.post(`/api/marks/${studentId}`);
     console.log('Email sent response:', response.data);
     toast.success(`Mail Sent Successfully`);
     dispatch({ type: 'EMAIL_SENT_SUCCESS', payload: studentId });
@@ -597,9 +597,9 @@ export const uploadPayment = (studentId, newpaymentData) => async (dispatch) => 
       type: ActionTypes.UPLOAD_PAYMENT,
       payload: paymentData
     })
-  }catch (error) {
+  } catch (error) {
     console.error('Error adding Payment data:', error)
-  } 
+  }
 };
 
 export const fetchTotalStudents = () => async (dispatch) => {
@@ -632,7 +632,7 @@ export const UploadEmailPopup = (popupFields) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: 'POPUP_EMAIL_SENT_FAILURE',
-      payload:error,
+      payload: error,
     });
     console.error('Error sending email:', error);
   }
@@ -714,35 +714,38 @@ export const uploadNewRole = (newRoleData) => async (dispatch) => {
 
 
 export const addEvent = (eventData) => async dispatch => {
-  dispatch({ type:ActionTypes.ADD_EVENT_REQUEST });
+  dispatch({ type: ActionTypes.ADD_EVENT_REQUEST });
   try {
     const response = await axios.post('api/events', eventData);
-    
+
     toast.success("form submitted successfully");
     dispatch({
-       type:ActionTypes. ADD_EVENT_SUCCESS, 
-       payload: response.data
-           });
+      type: ActionTypes.ADD_EVENT_SUCCESS,
+      payload: response.data
+    });
   } catch (error) {
     dispatch({
-       type:ActionTypes.ADD_EVENT_FAILURE, 
-       payload:error.message
-          });
+      type: ActionTypes.ADD_EVENT_FAILURE,
+      payload: error.message
+    });
   }
 };
 
 export const fetchEvents = () => async dispatch => {
-  dispatch({ 
-    type:ActionTypes.FETCH_EVENTS_REQUEST });
+  dispatch({
+    type: ActionTypes.FETCH_EVENTS_REQUEST
+  });
   try {
     const response = await axios.get('api/events');
-    dispatch({ 
-      type:ActionTypes.FETCH_EVENTS_SUCCESS,
-      payload:response.data 
+    dispatch({
+      type: ActionTypes.FETCH_EVENTS_SUCCESS,
+      payload: response.data
     });
   } catch (error) {
-    dispatch({ type:ActionTypes.FETCH_EVENTS_FAILURE, 
-      payload:error.message });
+    dispatch({
+      type: ActionTypes.FETCH_EVENTS_FAILURE,
+      payload: error.message
+    });
   }
 };
 
@@ -763,5 +766,112 @@ export const updateEvent = (event) => async dispatch => {
     dispatch({ type: ActionTypes.UPDATE_EVENT_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: ActionTypes.UPDATE_EVENT_FAILURE, payload: error.message });
+  }
+};
+
+export const UploadForgotPassword = (email) => async (dispatch) => {
+  try {
+    const response = await axios.post('/api/password', { email_id: email });
+    const { token, message } = response.data;
+    dispatch({
+      type: ActionTypes.OTP_SENT_SUCCESS,
+      payload: { message, token },
+    });
+    localStorage.setItem('resetToken', token);
+    toast.success('OTP sent successfully!');
+    return Promise.resolve();
+  } catch (error) {
+    dispatch({
+      type: ActionTypes.OTP_SENT_FAILURE,
+      payload: error.response ? error.response.data.message : 'Email id is not registered',
+    });
+    return Promise.reject(error);
+  }
+};
+
+export const UploadOtpVerification = (otp) => async (dispatch) => {
+  const token = localStorage.getItem('resetToken');
+  if (!token) {
+    toast.error('Token not found. Please request a new OTP.');
+    dispatch({
+      type: ActionTypes.UPLOAD_OTP_VERIFICATION_FAILURE,
+      payload: 'Token not found. Please request a new OTP.',
+    });
+    return;
+  }
+  dispatch({ type: ActionTypes.UPLOAD_OTP_VERIFICATION_REQUEST });
+  try {
+    const response = await axios.post('/api/password/otp', { otp, token }, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const { success, message } = response.data;
+    dispatch({
+      type: ActionTypes.UPLOAD_OTP_VERIFICATION_SUCCESS,
+      payload: { success, message },
+    });
+    toast.success('OTP verified successfully!');
+  } catch (error) {
+    dispatch({
+      type: ActionTypes.UPLOAD_OTP_VERIFICATION_FAILURE,
+      payload: error.response ? error.response.data.message : 'OTP verification failed',
+    });
+    toast.error('Invalid OTP');
+  }
+};
+
+export const UploadPassword = (newPassword, confirmPassword) => async (dispatch) => {
+  const token = localStorage.getItem('resetToken');
+  if (!token) {
+    toast.error('Token not found');
+    dispatch({
+      type: ActionTypes.UPDATE_PASSWORD_FAILED,
+      payload: 'Token not found',
+    });
+    return;
+  }
+  try {
+    const response = await axios.post('/api/password/updatepassword',
+      { newPassword, confirmPassword, token },
+      { headers: { 'Authorization': `Bearer ${token}` } }
+    );
+    const { message } = response.data;
+    dispatch({
+      type: ActionTypes.UPDATE_PASSWORD_SUCCESSFULLY,
+      payload: { message },
+    });
+    localStorage.removeItem('resetToken');
+    toast.success('Password updated successfully!');
+  } catch (error) {
+    dispatch({
+      type: ActionTypes.UPDATE_PASSWORD_FAILED,
+      payload: error.response ? error.response.data.message : 'Failed to update password',
+    });
+    toast.error(error.response ? error.response.data.message : 'Failed to update password');
+  }
+};
+
+export const resendOtp = (token) => async (dispatch) => {
+  dispatch({ type: ActionTypes.RESEND_OTP_REQUEST });
+  try {
+    const token = localStorage.getItem('resetToken');
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const response = await axios.post(
+      '/api/password/resend',
+      { token },
+      { headers: { 'Authorization': `Bearer ${token}` } }
+    );
+    const { message } = response.data;
+    dispatch({
+      type: ActionTypes.RESEND_OTP_SUCCESS,
+      payload: { message },
+    });
+    toast.success("OTP resend Successfully")
+  } catch (error) {
+    dispatch({
+      type: ActionTypes.RESEND_OTP_FAILED,
+      payload: error.response ? error.response.data.message : 'Failed to resend OTP',
+    });
   }
 };

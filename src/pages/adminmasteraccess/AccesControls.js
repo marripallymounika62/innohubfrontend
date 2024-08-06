@@ -15,7 +15,7 @@ function AccessControls({ title, textColor, backgroundColor }) {
 
     return (
         <div className="p-3 pb-1 sm:ml-60 gap-x">
-            <div className={`rounded-2xl p-3 pt-2 pb-[1px] ${backgroundColor || ''}`}>
+            <div className={`rounded-2xl p-3 pt-1 pb-[1px] ${backgroundColor || ''}`}>
                 <h1 className={`text-xl font-semibold font-poppins ${textColor || ''}`}>{title}</h1>
             </div>
             <div className="container mx-auto p-4">

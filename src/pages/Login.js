@@ -9,22 +9,18 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const adminState = useSelector((state) => state.admin);
     console.log("Admin State:", adminState);
-
     const [credentials, setCredentials] = useState({ username: '', password: '' });
     const [showAlert, setShowAlert] = useState(false);
-
+    const [showPassword, setShowPassword] = useState(false);
     const handleAdminLogin = (e) => {
         e.preventDefault();
         dispatch(adminLogin(credentials.username, credentials.password));
     };
-
     const onHomeClick = () => {
         navigate("/");
     };
-
     useEffect(() => {
         if (adminState.error) {
             setShowAlert(true);
@@ -32,7 +28,9 @@ const Login = () => {
             setShowAlert(false);
         }
     }, [adminState.error]);
-
+    const forgotpass = () => {
+        navigate("/forgotpassword");
+    }
     useEffect(() => {
         if (adminState.loggedIn || adminState.superadminLoggedIn) {
             if (adminState.superadminLoggedIn) {
@@ -59,7 +57,6 @@ const Login = () => {
 
     return (
         <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-[#090119] px-8 lg:p-0">
-            {/* Images and Vectors for larger screens */}
             <div className="hidden lg:flex flex-1 justify-center items-center">
                 <div className="relative">
                     <img className="w-full max-w-md" src="/login.jpg" alt="Login" />
@@ -70,8 +67,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Login Form */}
             <div className="w-full bg-color max-w-md mt-[0px] lg:mt-0 rounded-[50px_50px_50px_50px] lg:rounded-[120px_0px_0px_120px]">
                 <div className="flex justify-center">
                     <img className="w-32 h-32 mt-7 md:w-48 md:h-38" src="/poplogo.svg" alt="Your Company" />
@@ -122,7 +117,7 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="text-md mt-3">
-                        <a href="#" className="font-semibold text-white hover:text-indigo-500">
+                        <a href="#" className="font-semibold text-white hover:text-indigo-500" onClick={forgotpass}>
                             Forgot password?
                         </a>
                     </div>

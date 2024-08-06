@@ -50,13 +50,13 @@ function AccessControlHome() {
                                 </div>
                                 <button
                                     onClick={handleSave}
-                                    className="grow justify- items-center px-5 pt-1 text-gray-500  text-center text-white font-poppins text-xl font-semibold  bg-color rounded-2xl h-[45px]  w-[250px]  ml-[305px]"
+                                    className="grow justify- items-center px-5 pt-1 text-gray-500  text-center text-white font-poppins text-xl font-semibold  bg-color rounded-2xl h-[45px]  w-[250px]  ml-[300px]"
                                 >
                                     Save
                                 </button>
                                 <button
                                     onClick={handlReset}
-                                    className="grow justify-center items-center px-5 pt-1 text-gray-500  text-center text-white font-poppins text-xl font-semibold  bg-color rounded-2xl h-[45px]  w-[250px]  ml-[-20px] "
+                                    className="grow justify-center items-center px-5 pt-1 text-gray-500  text-center text-white font-poppins text-xl font-semibold  bg-color rounded-2xl h-[45px]  w-[250px]  ml-[-15px] "
                                 >
                                     Reset
                                 </button>
@@ -69,7 +69,7 @@ function AccessControlHome() {
                         backgroundColor="bg-color"
                     />
                     <div className="p-3 pb-5 sm:ml-60 gap-x">
-                        <div className=" bg-color rounded-2xl p-3 pt-2 pb-[1px]">
+                        <div className=" bg-color rounded-2xl p-3 pt-1 pb-[1px]">
                             <h1 className="text-xl font-semibold font-poppins text-white">Admin Master</h1>
                         </div>
                     </div>

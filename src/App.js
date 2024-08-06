@@ -99,6 +99,10 @@ import UpdateEducationHr from "./pages/HrPanel/AdminMaster/MasterModules/Educati
 
 import EventHomePage from "./pages/Events/EventHomePage";
 import EventHr from "./pages/HrPanel/EventManagement/EventHR/EventHr";
+import ForgotPassword from "./pages/ForgotPassword";
+import OtpVerification from "./pages/OtpVerification";
+import UpdatePassword from "./pages/UpdatePassword";
+
 
 function App() {
   const action = useNavigationType();
@@ -157,8 +161,8 @@ function App() {
   return (
     <div>
       <ToastContainer theme='colored' position='top-center'></ToastContainer>
-      
       <Routes>
+
         <Route path="/" element={<HomePage />} />
         <Route path="/eduproject1" element={<EduProject1 />} />
         <Route path="/researcharea" element={<ResearchArea />} />
@@ -182,6 +186,9 @@ function App() {
         <Route path="ahproject1" element={<AhProject1 />} />
         <Route path="insproject1" element={<InsProject1 />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/otpverification" element={<OtpVerification />} />
+        <Route path="/updatepassword" element={<UpdatePassword />} />
 
         <Route path="Agrproject3" element={<AgrProject3 />} />
         <Route path="Agrproject2" element={<AgrProject2 />} />
@@ -233,29 +240,28 @@ function App() {
         <Route path='updateEducation/:degreeId' element={<UpdateEducation />} />
         <Route path="/UserManagement" element={<UserManagement />} />
         <Route path="/AddUserMangForm" element={<AddUserMangForm />} />
-        <Route path="/roleManagement"  element={<RoleManagement/>}/>
-        <Route path="accessControl" element={<AccessControlHome />} />  
+        <Route path="/roleManagement" element={<RoleManagement />} />
+        <Route path="accessControl" element={<AccessControlHome />} />
 
 
         <Route path="/hrDashboard" element={<HrHome />} />
         <Route path="/enrolledstudents" element={<Enrolledstudents />} />
-        <Route path="/qualifiedstudents" element={<Qualifiedstudents/>}/>
-        <Route path="/RoleManagementHR" element={<RoleManagementHR/>}/>
+        <Route path="/qualifiedstudents" element={<Qualifiedstudents />} />
+        <Route path="/RoleManagementHR" element={<RoleManagementHR />} />
         <Route path='/allStateHR' element={<AllStateHr />} />
-        <Route path="/updateStateHR" element={<UpdateStateHr/>} />
-        <Route path="/allCityHR" element={<AllCityHr/>} />
-        <Route path="/updateCityHR" element={<UpdateCityHr/>} />
-        <Route path="/allEducationHR" element={<AllEducationHr/>} />
-        <Route path="/updateEducationHR" element={<UpdateEducationHr/>} />
-        <Route path="/eventmanagementHR" element={<EventHr/>} />
-
+        <Route path="/updateStateHR" element={<UpdateStateHr />} />
+        <Route path="/allCityHR" element={<AllCityHr />} />
+        <Route path="/updateCityHR" element={<UpdateCityHr />} />
+        <Route path="/allEducationHR" element={<AllEducationHr />} />
+        <Route path="/updateEducationHR" element={<UpdateEducationHr />} />
+        <Route path="/eventmanagementHR" element={<EventHr />} />
 
         <Route path="/events" element={<EventHomePage />} />
 
       </Routes>
 
 
-      
+
     </div>
   );
 }
