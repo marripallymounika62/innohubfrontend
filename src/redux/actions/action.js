@@ -877,3 +877,22 @@ export const resendOtp = (token) => async (dispatch) => {
     });
   }
 };
+
+export const fetchEventById = (id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/events/${id}`);
+      console.log(response.data,"data");
+    if (response.status === 200) {
+      const eventData = response.data;
+      //console.log(eventData,"eventData");
+      dispatch({
+        type: ActionTypes.FETCH_EVENT_BY_ID,
+        payload: eventData,
+      });
+    } else {
+      console.error('Unexpected status code:', response.status);
+    }
+  } catch (error) {
+    console.error('Error while fetching event by ID:', error);
+  }
+};

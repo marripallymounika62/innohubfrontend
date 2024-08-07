@@ -37,11 +37,23 @@ const AddEventForm = ({ onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addEvent(formData)); // Dispatch the action to add the event
     onClose(); // Close the form after submission
+  };*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const eventData = { ...formData };
+    if (eventData.freePaid === 'Free') {
+      delete eventData.paidAmount;
+    }
+  
+    dispatch(addEvent(eventData)); 
+    onClose(); 
   };
+  
 
   return (
     <div className="relative bg-color mt-[600px] w-screen-full md:ml-[-500px] lg:ml-[300px] mr-16 xl:ml-[-50px] rounded-3xl border-4 border-white popup-content grid justify-items-start">
@@ -84,15 +96,15 @@ const AddEventForm = ({ onClose }) => {
               <div className="self-stretch rounded-[8.08px] bg-whitesmoke flex flex-row items-center justify-between  pb-[11px] pr-4  box-border gap-[20px] max-w-full mq450:flex-wrap">
                 <div className="h-[51px] w-[165px] relative rounded-[8.08px] bg-whitesmoke hidden max-w-full" />
                 <select
-                  className="w-full [border:none] [outline:none] bg-whitesmoke self-stretch h-[51px] rounded-[8.08px] flex flex-row items-center justify-start pt-3 px-[20px] pb-4 box-border font-poppins text-mini-1 text-color min-w-[270px] md:min-w-[355px] "
-                  value={selectedMode}
-                  onChange={(e) => setSelectedMode(e.target.value)}
+                  className="w-full [border:none] [outline:none] bg-whitesmoke self-stretch h-[51px] rounded-[8.08px] flex flex-row items-center justify-start pt-3 px-[20px] pb-4 box-border font-poppins text-mini-1 text-color min-w-[270px] md:min-w-[355px]"
+                  name="selectEvent"
+                  value={formData.selectEvent}
+                  onChange={handleChange}
                 >
                   <option value="">Select Event</option>
-                  <option value="Male">Webinar</option>
-                  <option value="Female">Conference</option>
-                  <option value="Female">Workshop</option>
-                  
+                  <option value="Webinar">Webinar</option>
+                  <option value="Conference">Conference</option>
+                  <option value="Workshop">Workshop</option>
                 </select>
               </div>
             </div>
@@ -218,7 +230,7 @@ const AddEventForm = ({ onClose }) => {
               </div>
             </div>
             <div className="lg:mx-8">
-              <TextField
+              {/*<TextField
                 label="Paid Amount*"
                 name="paidAmount"
                 type="number"
@@ -228,7 +240,18 @@ const AddEventForm = ({ onClose }) => {
                 disabled={formData.freePaid === "Free"}
                 className={formData.freePaid === "Free" ? "bg-gray-200 text-gray-500" : ""}
 
+              />*/}
+              <TextField
+                label="Paid Amount*"
+                name="paidAmount"
+                type="number"
+                value={formData.paidAmount}
+                onChange={handleChange}
+                placeholder="Enter Amount"
+                disabled={formData.freePaid === "Free"}
+                className={formData.freePaid === "Free" ? "bg-gray-200 text-gray-500" : ""}
               />
+
             </div>
           </div>
           <div className="flex flex-col mx-2 lg:flex-row space-y-4 lg:space-y-0 pb-3">

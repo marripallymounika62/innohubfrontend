@@ -102,6 +102,7 @@ import EventHr from "./pages/HrPanel/EventManagement/EventHR/EventHr";
 import ForgotPassword from "./pages/ForgotPassword";
 import OtpVerification from "./pages/OtpVerification";
 import UpdatePassword from "./pages/UpdatePassword";
+import WebinarSpeaker from "./pages/Events/WebinarSpeaker";
 
 
 function App() {
@@ -257,6 +258,7 @@ function App() {
         <Route path="/eventmanagementHR" element={<EventHr />} />
 
         <Route path="/events" element={<EventHomePage />} />
+        <Route path="/webinarSpeaker/:eventId" element={<WebinarSpeaker />} />
 
       </Routes>
 

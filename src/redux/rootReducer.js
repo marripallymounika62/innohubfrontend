@@ -43,6 +43,7 @@ import eventReducer from './reducers/eventReducer.js';
 import UploadForgotPassword from './reducers/UploadForgotPassword.js';
 import UploadOtpReducer from './reducers/UploadOtpReducer.js';
 import UpdatePasswordReducer from './reducers/UpdatePasswordReducer.js';
+import FetchEventById from './reducers/FetchEventById.js';
 // Combine all the reducers
 
 const rootReducer = combineReducers({
@@ -89,7 +90,8 @@ const rootReducer = combineReducers({
   events:eventReducer,
   uploadForgotPassword:UploadForgotPassword,
   uploadOtp:UploadOtpReducer,
-  uploadResetPassword:UpdatePasswordReducer
+  uploadResetPassword:UpdatePasswordReducer,
+  fetchEventById: FetchEventById,
 
 });
 

@@ -1,4 +1,30 @@
-import React from 'react'
+import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
+import Header from "../Header";
+import EventSection from "./EventSection";
+import UpcomingEvents from "./UpcomingEvents";
+import Gallery from "./Gallery";
+
+const EventHomePage = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="relative bg-gray xl:w-full lg:w-full md:w-full w-full px-0 mx-auto">
+      <div className="relative mx-auto pt-5 font-poppins">
+        <Header />
+        <main className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+          <EventSection />
+          <UpcomingEvents />
+          <Gallery />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  );
+};
+
+export default EventHomePage;
+/*import React from 'react'
 import Header from '../Header'
 import Footer from '../Footer'
 
@@ -16,4 +42,4 @@ const EventHomePage = () => {
   )
 }
 
-export default EventHomePage
+export default EventHomePage*/
