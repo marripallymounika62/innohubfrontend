@@ -73,8 +73,15 @@ function Students() {
 
   useEffect(() => {
     //dispatch(fetchStudents());
+    console.log("FetchTotalStudents:");
     dispatch(fetchTotalStudents());
   }, [dispatch]);
+  useEffect(() => {
+    console.log("Updated state from Redux:");
+    console.log("totalEnrolledStudents:", totalEnrolledStudents);
+    console.log("totalQualifiedStudents:", totalQualifiedStudents);
+    console.log("totalRejectedStudents:", totalRejectedStudents);
+  }, [totalEnrolledStudents, totalQualifiedStudents, totalRejectedStudents]);
   return (
     <div className="p-4 pb-10 sm:ml-60 gap-x-5 ">
       <div className="flex gap-16 md:gap-4 px-8 font-poppins max-md:flex-wrap">

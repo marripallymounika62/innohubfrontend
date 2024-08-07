@@ -605,7 +605,7 @@ export const uploadPayment = (studentId, newpaymentData) => async (dispatch) => 
 export const fetchTotalStudents = () => async (dispatch) => {
   try {
     const response = await axios.get('/api/students/count');
-
+    console.log('API Response:', response.data);
     if (response.status === 200) {
       const { totalEnrolledStudents, totalQualifiedStudents, totalRejectedStudents } = response.data;
       dispatch({
@@ -643,7 +643,8 @@ export const deactivateStudent = (studentId) => async (dispatch) => {
   try {
     const response = await axios.put(`/api/students/${studentId}/deactivate`);
     if (response.status === 200) {
-      toast.success(`You have successfully deactivated Student Id ${studentId}`);
+      const { message } = response.data;
+      toast.success(message);
       dispatch({
         type: ActionTypes.DEACTIVATE_STUDENT_SUCCESS,
         payload: studentId,
@@ -653,6 +654,7 @@ export const deactivateStudent = (studentId) => async (dispatch) => {
     }
   } catch (error) {
     console.error('Error while deactivating student:', error);
+    toast.error('Failed to update student status.');
   }
 };
 
@@ -677,7 +679,7 @@ export const deactivateQualifiedStudent = (studentId) => async (dispatch) => {
 export const deactivateRole = (rolesId) => async (dispatch) => {
   console.log(rolesId, "rolesId");
   try {
-    const response = await axios.put(`/api/roles/${rolesId}/deactivate`);
+    const response = await axios.delete(`/api/roles/${rolesId}/deactivate`);
     if (response.status === 200) {
       toast.success(`You have successfully deactivated Role Id ${rolesId}`);
       dispatch({

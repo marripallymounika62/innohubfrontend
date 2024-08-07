@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTable, usePagination, useGlobalFilter, useFilters, useSortBy } from 'react-table';
 
-const Table = ({ columns, data, heading, button }) => {
+const Table = ({ columns, data, heading, button, rowClassName = () => '' }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -82,7 +82,8 @@ const Table = ({ columns, data, heading, button }) => {
                   <tr
                     {...row.getRowProps()}
                     style={{ border: '1px solid blue' }}
-                    className="border-t border-gray-500"
+                    //className="border-t border-gray-500"
+                    className={`${rowClassName(row)} border-t border-gray-500`}
                   >
                     {row.cells.map((cell) => {
                       return (

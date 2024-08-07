@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from "../../../../components/dropdown/DropDown";
 import ViewStudent from '../../../../components/enrolledstudents/ViewStudent';
 import TextField from "../../../../components/formcomponents/TextField";
-import Deactivate from '../../../../components/enrolledstudents/Deactivate';
+//import Deactivate from '../../../../components/enrolledstudents/Deactivate';
 
 const  QualifiedStudents = () => {
   const mark = useSelector((state) => state.fetchMark.mark); 
@@ -17,7 +17,7 @@ const  QualifiedStudents = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [installmentStatus, setInstallmentStatus] = useState({});
   const [selectedDates, setSelectedDates] = useState({});
-  const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
+  //const [showDeactivatePopup, setShowDeactivatePopup] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const  QualifiedStudents = () => {
             <select
               value={installmentStatus[row.original.student_id]?.installment1 || 'Unpaid'}
               onChange={(e) => handleInstallmentChange(row.original.student_id, 'installment1', e.target.value)}
+              disabled={row.original.status === 1}
             >
               <option value="Paid">Paid</option>
               <option value="Unpaid">Unpaid</option>
@@ -100,6 +101,7 @@ const  QualifiedStudents = () => {
             <select
               value={installmentStatus[row.original.student_id]?.installment2 || 'Unpaid'}
               onChange={(e) => handleInstallmentChange(row.original.student_id, 'installment2', e.target.value)}
+              disabled={row.original.status === 1}
             >
               <option value="Paid">Paid</option>
               <option value="Unpaid">Unpaid</option>
@@ -115,6 +117,7 @@ const  QualifiedStudents = () => {
             value={selectedDates[row.original.student_id] || ''}
             onChange={(e) => handleDateChange(row.original.student_id, e.target.value)}
             className="w-35 h-6"
+            disabled={row.original.status === 1}
             />
           ),
         },
@@ -151,16 +154,16 @@ const  QualifiedStudents = () => {
           accessor: 'actions', 
           Cell: ({ row }) => (
             <Dropdown
-              options={['View', 'Deactivate']}
+              options={['View']}
               onSelect={(option) => handleOptionSelect(option, row.original)}
             />
           ),
         },
     ]
       
-    const handleDeactivate = (studentId) => {
+    /*const handleDeactivate = (studentId) => {
       dispatch(deactivateQualifiedStudent(studentId));
-    }; 
+    };*/ 
 
     const handleOptionSelect = (option, student) => {
       if (option === 'View') {
@@ -168,15 +171,17 @@ const  QualifiedStudents = () => {
         setSelectedStudent(foundStudent);
         setShowPopup(true);
       }
-      else if (option === 'Deactivate') {
+      /*else if (option === 'Deactivate') {
         setSelectedStudent(student);  
         setShowDeactivatePopup(true);  
-      }
+      }*/
       /*else if  (option === 'Deactivate') {
         handleDeactivate(student.student_id);
       }*/
     };
     const handleInstallmentChange = (studentId, installment, value) => {
+      const student = combinedData.find((s) => s.student_id === studentId);
+        if (student.status === 1) return;
       const updatedStatus = {
         ...installmentStatus[studentId],
         [installment]: value,
@@ -201,6 +206,8 @@ const  QualifiedStudents = () => {
     };
   
     const handleDateChange = (studentId, date) => {
+      const student = combinedData.find((s) => s.student_id === studentId);
+        if (student.status === 1) return;
       setSelectedDates((prevDates) => ({
         ...prevDates,
         [studentId]: date,
@@ -242,19 +249,20 @@ const  QualifiedStudents = () => {
           columns={columns}
           data={combinedData} 
           heading="Qualified Students"
+          rowClassName={(row) => (row.original.status === 1 ? 'bg-midnightblue' : '')} 
        />
       </div>
       </div>
       {showPopup && (
         <ViewStudent student={selectedStudent} onClose={() => setShowPopup(false)} />
       )}
-       {showDeactivatePopup && (
+       {/*{showDeactivatePopup && (
         <Deactivate
           student={selectedStudent}
           onClose={() => setShowDeactivatePopup(false)}
           onSubmit={handleDeactivate}
         />
-      )}
+      )}*/}
     </div>
   )
 }
