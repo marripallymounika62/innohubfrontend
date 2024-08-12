@@ -4,6 +4,9 @@ import { MdAdminPanelSettings, MdDashboard, MdContentCopy } from "react-icons/md
 import { IoIosPerson, IoMdArrowDropdown } from "react-icons/io";
 import { PiStudentBold } from "react-icons/pi";
 import { HiOutlineViewList } from 'react-icons/hi';
+import Popup from 'reactjs-popup';
+import Logout from './Logout';
+import Change from './Change';
 import { RxDropdownMenu } from "react-icons/rx";
 import "./home.css";
 
@@ -111,13 +114,16 @@ const AdminSidebar = () => {
               <a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
                 Update Profile
               </a>
-              <a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
+              <Popup trigger={<a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
                 Change Password
-              </a>
-             
-              <a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
+              </a>} position="right center">
+                <Change />
+              </Popup>
+              <Popup trigger={<a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
                 Logout
-              </a>
+              </a>} position="right center">
+              <Logout/>
+              </Popup>
             </ul>
             <a
               href="#"

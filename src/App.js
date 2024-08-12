@@ -104,6 +104,8 @@ import OtpVerification from "./pages/OtpVerification";
 import UpdatePassword from "./pages/UpdatePassword";
 import WebinarSpeaker from "./pages/Events/WebinarSpeaker";
 
+import Logout from "./pages/AdminPanel/AdminPanel/Logout";
+
 
 function App() {
   const action = useNavigationType();
@@ -259,6 +261,10 @@ function App() {
 
         <Route path="/events" element={<EventHomePage />} />
         <Route path="/webinarSpeaker/:eventId" element={<WebinarSpeaker />} />
+
+        <Route path="/login" component={Login} />
+        <Route path="/logout" component={Logout} />
+
 
       </Routes>
 
