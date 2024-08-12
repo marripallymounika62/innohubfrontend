@@ -44,6 +44,8 @@ import UploadForgotPassword from './reducers/UploadForgotPassword.js';
 import UploadOtpReducer from './reducers/UploadOtpReducer.js';
 import UpdatePasswordReducer from './reducers/UpdatePasswordReducer.js';
 import FetchEventById from './reducers/FetchEventById.js';
+import { UploadParticipant } from './reducers/UploadParticipantRegistrationForm.js';
+import { FetchParticipants } from './reducers/FetchParticipants.js';
 // Combine all the reducers
 
 const rootReducer = combineReducers({
@@ -92,6 +94,8 @@ const rootReducer = combineReducers({
   uploadOtp:UploadOtpReducer,
   uploadResetPassword:UpdatePasswordReducer,
   fetchEventById: FetchEventById,
+  uploadParticipant: UploadParticipant,
+  fetchParticipants: FetchParticipants,
 
 });
 

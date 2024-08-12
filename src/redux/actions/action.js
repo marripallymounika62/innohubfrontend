@@ -1025,3 +1025,40 @@ export const fetchEventById = (id) => async (dispatch) => {
     console.error("Error while fetching event by ID:", error);
   }
 };
+
+export const UploadRegistrationForm = (newFormData) => async (dispatch) => {
+  try {
+    const response = await axios.post('/api/participantseventform', newFormData);
+    const formData = response.data;
+    toast.success("Form uploded successfully");
+    dispatch({
+      type: ActionTypes.UPLOAD_PARTICIPANT,
+      payload: formData
+    });
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.error) {
+      toast.error(error.response.data.error);
+    } else {
+      toast.error("An error occurred while creating the participant.");
+    }
+    console.error('Error uploading new participant:', error);
+  }
+};
+
+export const fetchParticipants = () => async (dispatch) => {
+  try {
+    const response = await axios.get('/api/participantseventform');
+    console.log('API Response:', response.data);
+    if (response.status === 200) {
+      const participantsData = response.data;
+      dispatch({
+        type: ActionTypes.FETCH_PARTICIPANT,
+        payload: participantsData,
+      });
+    } else {
+      console.error('Unexpected status code:', response.status);
+    }
+  } catch (error) {
+    console.error('Error while fetching Participants:', error);
+  }
+};
