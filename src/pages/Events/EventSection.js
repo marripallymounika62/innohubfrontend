@@ -13,8 +13,22 @@ function EventSection() {
   }, [dispatch]);
 
   const handleViewMore = (eventId) => {
-    navigate(`/webinarSpeaker/${eventId}`);
+    if (eventId) {
+      navigate(`/webinarSpeaker/${eventId}`);
+    } else {
+      navigate(`/placeholder`);
+    }
   };
+
+  const defaultEvents = Array(4).fill({
+    id: null,
+    selectEvent: 'Upcoming Event',
+    eventName: 'Event Name',
+    speakerName: 'Speaker Name',
+    speakerDetails: 'Speaker Bio',
+    imageUrl: 'placeholder-image.jpg',
+    dateOfEvent: new Date().toISOString(),
+  });
 
   const groupedEvents = events.reduce((acc, event) => {
     const eventDate = new Date(event.dateOfEvent);
@@ -25,6 +39,11 @@ function EventSection() {
   }, {});
 
   const uniqueEvents = Object.values(groupedEvents).sort((a, b) => new Date(a.dateOfEvent) - new Date(b.dateOfEvent));
+
+  
+  const displayEvents = uniqueEvents.length > 0
+    ? uniqueEvents.slice(0, 4).concat(defaultEvents.slice(uniqueEvents.length))
+    : defaultEvents;
 
   return (
     <section id="events" className="relative my-8">
@@ -39,18 +58,24 @@ function EventSection() {
       <div className="w-full text-white p-4 relative z-10 -mt-40">
         <h3 className="text-13xl md:text-29xl lg:text-29xl font-bold ml-12">Events</h3>
         <div className="flex flex-nowrap gap-4 mt-8 px-4 overflow-x-auto">
-          {uniqueEvents.slice(0, 4).map(event => (
-            <div key={event.id} className="relative bg-white text-black p-4 rounded-3xl shadow-lg border-8 border-color flex flex-col items-center ml-8 -mr-20 w-72 h-140 z-10">
+          {displayEvents.map((event, index) => (
+            <div key={index} className="relative bg-white text-black p-4 rounded-3xl shadow-lg border-8 border-color flex flex-col items-center ml-8 -mr-20 w-72 h-140 z-10">
               <h3 className="text-3xl font-bold mb-12">{event.selectEvent}</h3>
               <div className="rounded-full overflow-hidden border-8 border-indigo-600 bg-color w-40 h-40 flex items-center justify-center mb-8">
-                <img src={event.imageUrl || "instructor1.jpg"} alt={event.topic} className="w-full h-full object-cover" />
+                <img src={"usericon.png"} alt={event.topic || "Event"} className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col items-start mt-12">
                 <p className="m-0">Event Name: {event.eventName}</p>
                 <p className="m-0">Speaker Name: {event.speakerName}</p>
                 <p className="m-0">Bio: {event.speakerDetails}</p>
               </div>
-              <button onClick={() => handleViewMore(event.id)} className="mt-10 bg-black text-white py-2.5 px-5 font-bold rounded-3xl mb-12">View More</button>
+              <button 
+                onClick={() => handleViewMore(event.id)} 
+                className="mt-10 bg-black text-white py-2.5 px-5 font-bold rounded-3xl mb-12"
+                disabled={!event.id}  
+              >
+                View More
+              </button>
             </div>
           ))}
         </div>
