@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoMdLock } from "react-icons/io";
 import TextField from "../../../components/formcomponents/TextField";
 import { updatePassword } from "../../../redux/actions/action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
@@ -14,6 +14,8 @@ const Change = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const adminState = useSelector((state) => state.users);
+    console.log("user State:", adminState);
 
   const toggleNewPasswordVisibility = () => {
     setShowNewPassword((prevShowNewPassword) => !prevShowNewPassword);
