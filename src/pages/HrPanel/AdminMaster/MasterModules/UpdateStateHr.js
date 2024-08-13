@@ -37,7 +37,7 @@ const UpdateStateHr = () => {
     dispatch(updateStateById(stateData, stateId));
     navigate("/allStateHR");
     console.log("formdata", stateData);
-  }; 
+  };
 
   const selectedState = stateDetails[0];
   useEffect(() => {

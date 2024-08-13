@@ -2,7 +2,6 @@
 import { ActionTypes } from "../constants/action-types";
 import axios from "../../api/axios";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 export const setStates = (states) => ({
   type: ActionTypes.SET_STATES,
@@ -78,7 +77,6 @@ export const adminLogin = (username, password) => async (dispatch) => {
 
     // Log the entire response for debugging
     console.log("Response:", response.data);
-    
 
     // Extract message, token, and role from response data
     const { message, token, role } = response.data;
@@ -86,7 +84,6 @@ export const adminLogin = (username, password) => async (dispatch) => {
     // Log token and role for debugging
     console.log("Token:", token);
     console.log("Role:", role);
-    
 
     // Check if login was successful
     if (
