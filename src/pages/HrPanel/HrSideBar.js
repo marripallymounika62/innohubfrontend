@@ -6,12 +6,6 @@ import { HiDocumentReport} from "react-icons/hi";
 import { PiStudentBold } from "react-icons/pi";
 import { HiOutlineViewList } from 'react-icons/hi';
 import { RxDropdownMenu } from "react-icons/rx";
-
-import Popup from 'reactjs-popup';
-import Change from '../AdminPanel/AdminPanel/Change';
-import Logout from '../AdminPanel/AdminPanel/Logout';
-import UpdateProfile from '../AdminPanel/AdminPanel/UpdateProfile';
-
 //import "./home.css";
 
 const HrSidebar = () => {
@@ -115,23 +109,16 @@ const HrSidebar = () => {
               id="dropdown-example"
               className={`py-2 space-y-2 ${profileDown ? "" : "hidden"}`}
             >
-             <Popup trigger={<a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
-                Update Profile
-              </a>} position='right center'>
-                <UpdateProfile/>
-              </Popup>
-             
-              <Popup trigger={<a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
+              <a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
+                Update profile 
+              </a>
+              <a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
                 Change Password
-              </a>} position="right center">
-                <Change />
-              </Popup>
+              </a>
               
-              <Popup trigger={<a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
+              <a href="#" className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 whitespace-nowrap ml-[-70px] no-underline">
                 Logout
-              </a>} position="right center">
-              <Logout/>
-              </Popup>
+              </a>
             </ul>
             <a
               href="#"

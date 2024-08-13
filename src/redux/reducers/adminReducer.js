@@ -26,15 +26,6 @@ const adminReducer = (state = initialState, action) => {
               role: null,
               error: action.payload,
           };
-        case 'ADMIN_LOGOUT_SUCCESS':
-            return {
-                ...state,
-              loggedIn: false,
-              superadminLoggedIn: false,
-              token: null,
-              role: null,
-              error: null,
-            }
       default:
           return state;
   }
