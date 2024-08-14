@@ -895,7 +895,6 @@ export const fetchEventById = (id) => async (dispatch) => {
   } catch (error) {
     console.error('Error while fetching event by ID:', error);
   }
-<<<<<<< HEAD
 };
 
 export const UploadRegistrationForm = (newFormData) => async (dispatch) => {
@@ -933,6 +932,4 @@ export const fetchParticipants = () => async (dispatch) => {
   } catch (error) {
     console.error('Error while fetching Participants:', error);
   }
-=======
->>>>>>> parent of d4fe22b (Change password ,Logout,Update profile)
 };
