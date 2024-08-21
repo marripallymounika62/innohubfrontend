@@ -129,7 +129,7 @@ const EnrolledStudents = () => {
 
   const handleOptionSelect = (option, student) => {
     if (student.status === 1 && option !== 'Activate' && option !== 'View') {
-      return; 
+      return;
     }
     if (option === 'View') {
       setSelectedStudent(student);
@@ -152,21 +152,13 @@ const EnrolledStudents = () => {
     dispatch(uploadNewMark(markData));
   };
 
-  const handleEditSubmit = (editedStudentData) => {
-    console.log('Edited Student:', editedStudentData);
+  const handleEditSubmit = (editedStudent) => {
     setShowEditPopup(false);
   };
 
   const sendEmailToStudent = useCallback((student_Id) => {
     dispatch(sendEmail(student_Id));
   }, [dispatch]);
-
-  /*const rowClassName = (row) => {
-    if (row.original.status === 1) {
-      return 'bg-gray-200';
-    }
-    return '';
-  };*/
 
   return (
     <div className="flex flex-row w-full bg-[#090119] overflow-hidden">
@@ -183,8 +175,8 @@ const EnrolledStudents = () => {
                   columns={columns}
                   data={combinedData}
                   heading="Enrolled Students"
-                  button="Add new student"
-                  rowClassName={(row) => (row.original.status === 1 ? 'bg-midnightblue' : '')} 
+                  // button="Add new student"
+                  rowClassName={(row) => (row.original.status === 1 ? 'bg-white text-black' : '')}
                 />
               ) : (
                 <p>no records to display</p>

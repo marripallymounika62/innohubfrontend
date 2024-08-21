@@ -9,14 +9,6 @@ const initialState = {
 
 const UpdatePasswordReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ActionTypes.RESEND_OTP_REQUEST:
-            return {
-                ...state,
-                loading: true,
-                resendOtpSuccess: false,
-                resendOtpMessage: '',
-                resendOtpError: '',
-            };
         case 'UPDATE_PASSWORD_SUCCESSFULLY':
             return {
                 ...state,

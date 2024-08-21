@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { adminLogin } from '../redux/actions/action';
 import { FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Login = () => {
     const [credentials, setCredentials] = useState({ username: '', password: '' });
     const [showAlert, setShowAlert] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
     const handleAdminLogin = (e) => {
         e.preventDefault();
         dispatch(adminLogin(credentials.username, credentials.password));
@@ -100,11 +102,11 @@ const Login = () => {
                             <label htmlFor="password" className="block text-3xl font-medium leading-6 text-white">
                                 Password
                             </label>
-                            <div className="input-container flex mt-1">
+                            <div className="input-container flex mt-1 relative">
                                 <input
                                     id="password"
                                     name="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     autoComplete="current-password"
                                     required
                                     value={credentials.password}
@@ -112,6 +114,17 @@ const Login = () => {
                                     className="appearance-none rounded-l-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Password"
                                 />
+                                <button
+                                    type="button"
+                                    className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-500 bg-transparent z-10"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? (
+                                        <FaEye className="text-gray-500 " />
+                                    ) : (
+                                        <FaEyeSlash className="text-gray-500" />
+                                    )}
+                                </button>
                                 <RiLockPasswordLine className="bg-black text-white w-[50px] h-[45px] rounded-r-md" />
                             </div>
                         </div>
@@ -143,3 +156,4 @@ const Login = () => {
 };
 
 export default Login;
+

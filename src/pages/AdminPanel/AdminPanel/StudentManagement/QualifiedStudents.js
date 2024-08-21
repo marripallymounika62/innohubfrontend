@@ -243,7 +243,7 @@ const  QualifiedStudents = () => {
     <AdminHeader dashboardName="Student Management" />
     <AdminSidebar/>
      
-      <div className="md:flex-1 md:ml-8 px-4 pt-24 pl-60">
+      <div className="overflow-x-auto w-full md:flex-1 md:ml-8 px-4 pt-28 pl-60">
        <div className="text-white">
         <Table
           columns={columns}

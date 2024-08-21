@@ -46,10 +46,13 @@ import UpdatePasswordReducer from './reducers/UpdatePasswordReducer.js';
 import FetchEventById from './reducers/FetchEventById.js';
 import { UploadParticipant } from './reducers/UploadParticipantRegistrationForm.js';
 import { FetchParticipants } from './reducers/FetchParticipants.js';
+import EditUserManagementReducer from './reducers/EditUserManagementReducer.js';
+import userDeactivateReducer from './reducers/userDeactivateReducer .js';
+
 // Combine all the reducers
 
 const rootReducer = combineReducers({
- 
+
   states: statesReducer,
   cities: citiesReducer,
   higherEducation: higherEducationReducer,
@@ -74,28 +77,31 @@ const rootReducer = combineReducers({
   uploadEducation: UploadEducation,
   updateEducation: updateEducation,
   deactivateEducation: DeactivateEducation,
-  userForm:userSubmitReducer,
-  roles:rolesReducer,
-  users:userdisplayReducer,
+  userForm: userSubmitReducer,
+  roles: rolesReducer,
+  users: userdisplayReducer,
   fetchMark: FetchMark,
   uploadMark: UploadMark,
   fetchStudentMark: FetchStudentMark,
-  userEmail:userEmailReducer,
+  userEmail: userEmailReducer,
   emailMark: EmailMark,
   uploadPayment: UploadPayment,
   fetchStudent: FetchStudent,
-  uploadEmailPopup:UploadEmailPopup,
+  uploadEmailPopup: UploadEmailPopup,
   deactivateStudent: DeactivateStudent,
   deactivateQualifiedStudent: DeactivateQualifiedStudent,
   deactivateRole: DeactivateRole,
   uploadRole: UploadRole,
-  events:eventReducer,
-  uploadForgotPassword:UploadForgotPassword,
-  uploadOtp:UploadOtpReducer,
-  uploadResetPassword:UpdatePasswordReducer,
+  events: eventReducer,
+  uploadForgotPassword: UploadForgotPassword,
+  uploadOtp: UploadOtpReducer,
+  uploadResetPassword: UpdatePasswordReducer,
   fetchEventById: FetchEventById,
   uploadParticipant: UploadParticipant,
   fetchParticipants: FetchParticipants,
+  edituser: EditUserManagementReducer,
+  deactivateuser: userDeactivateReducer
+
 
 });
 

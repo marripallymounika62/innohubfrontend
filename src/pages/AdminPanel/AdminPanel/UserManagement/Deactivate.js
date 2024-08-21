@@ -1,14 +1,13 @@
 import React from 'react';
 
-const Deactivate = ({ role, onClose, onSubmit, action }) => {
+const Deactivate = ({ user, onClose, onSubmit, action }) => {
   const handleAction = () => {
-    onSubmit(role.roles_id);
+    onSubmit(user.user_id);
     onClose();
   };
-
   const message = action === 'Deactivate'
-    ? `Are you sure you want to deactivate  ${role.roles_name}? Deactivating a student will immediately suspend all related users and resources. This action is irreversible.`
-    : `Are you sure you want to activate  ${role.roles_name}? Activating a student will re-enable all related users and resources.`;
+    ? `Are you sure you want to deactivate ${user.first_name} ${user.last_name}? Deactivating a student will immediately suspend all related users and resources. This action is irreversible.`
+    : `Are you sure you want to activate ${user.first_name} ${user.last_name}? Activating a student will re-enable all related users and resources.`;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

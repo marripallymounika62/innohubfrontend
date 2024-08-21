@@ -51,7 +51,7 @@ const HomePage = () => {
 
   return (
 
-  <div className="xl:w-full relative bg-gray h-[4276px] lg:h-[3420px] overflow-hidden text-left text-xl text-cold-grey-white font-poppins
+  <div className="xl:w-[1362px] relative bg-gray h-[4276px] lg:h-[3420px] overflow-hidden text-left text-xl text-cold-grey-white font-poppins
     w-[1207px] flex flex-col  items-start justify-start  py-0 px-5">
       <div className="absolute w-[calc(100%_-_3px)] top-[0px] right-[1.6px] left-[1.4px] h-[95px] overflow-hidden">
         <ScrollingText />
@@ -59,7 +59,6 @@ const HomePage = () => {
           className="absolute h-[80.56%] top-[21%] bottom-[31.22%] left-[calc(48%_-_596.2px)] max-h-full w-[248.4px] cursor-pointer"
           alt=""
           src="/poplogo.svg"
-          //src="/pop.png"
           onClick={onGroupClick}
         /> 
          <div className="absolute top-[40px] left-[calc(50%_-_111px)] w-[694px] flex flex-row items-center justify-between">

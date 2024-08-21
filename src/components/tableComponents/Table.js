@@ -12,14 +12,14 @@ const Table = ({ columns, data, heading, button, rowClassName = () => '' }) => {
     canNextPage,
     canPreviousPage,
     pageOptions,
-    state: { pageIndex,pageSize, globalFilter },
+    state: { pageIndex, pageSize, globalFilter },
     prepareRow,
     setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
-      initialState: { pageSize: 5 }, // Set initial page size
+      initialState: { pageSize: 5 },
     },
     useGlobalFilter,
     useFilters,
@@ -29,25 +29,20 @@ const Table = ({ columns, data, heading, button, rowClassName = () => '' }) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center justify-between m-4">
-        <div className='font-semibold text-3xl md:text-lg '>
-        <h3>{heading}</h3>
+      <div className="flex flex-col md:flex-row items-center justify-between mb-9">
+        <div className='font-semibold text-3xl md:text-lg'>
+          <h3 className='lg:mb-[-5px] xl:mb-[0px]'>{heading}</h3>
         </div>
-        <div className="md:ml-10 mt-4 md:mt-0">
+        <div className="md:ml-10 mt-4 md:mt-0 ">
           <input
             type="text"
             value={globalFilter || ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search..."
-            className="bg-white border border-gray-300 rounded-md px-4 py-2  w-36 md:w-96"
+            className="  lg:absolute left-[520px]  xl:absolute left-[560px]  bg-white border border-gray-300 rounded-md px-4 py-2 xl:mr-[430px] w-36 md:w-96"
           />
         </div>
-
-       {/*  <button className="bg-color hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 md:mt-0 md:ml-4 rounded">
-          {button}
-        </button> */}
       </div>
-
       {page.length === 0 ? (
         <p className="text-center">No records to display</p>
       ) : (
@@ -82,7 +77,6 @@ const Table = ({ columns, data, heading, button, rowClassName = () => '' }) => {
                   <tr
                     {...row.getRowProps()}
                     style={{ border: '1px solid blue' }}
-                    //className="border-t border-gray-500"
                     className={`${rowClassName(row)} border-t border-gray-500`}
                   >
                     {row.cells.map((cell) => {
@@ -103,7 +97,6 @@ const Table = ({ columns, data, heading, button, rowClassName = () => '' }) => {
           </table>
         </div>
       )}
-      {/* Pagination */}
       <div className="flex justify-end m-5">
         <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-4">
           Previous
