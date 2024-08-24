@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { adminLogin, fetchStates } from '../../../../redux/actions/action';
 import { fetchCities } from '../../../../redux/actions/action';
 import { fetchRoles } from '../../../../redux/actions/action';
-import { sendUserForm, resetForm } from '../../../../redux/actions/action';
+import { sendUserForm, resetForm} from '../../../../redux/actions/action';
 import DatePicker from '../../../../components/formcomponents/DatePicker';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
@@ -15,6 +15,7 @@ function AddUserMangForm({ onCloseee }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formFieldsss, setFormFieldsss] = useState({
+    // Initial form data
     first_name: '',
     last_name: '',
     adhaar_no: '',
@@ -29,17 +30,22 @@ function AddUserMangForm({ onCloseee }) {
     roles_name: '',
     gender: '',
     profession: ''
+
   });
   const [formState, setFormState] = useState({
     username: '', // Define your form fields here
-    password: '', // Define your form fields here 
+    password: '', // Define your form fields here
+    // Add other form fields here
   });
+  // console.log("xyz",formFieldsss)
   const userFormData = useSelector((state) => state.userForm);
   const error = useSelector((state) => state.error);
   const states = useSelector((state) => state.states.states);
   const cities = useSelector((state) => state.cities.cities);
   const roles = useSelector((state) => state.roles.roles);
-  const email = useSelector((state) => state.userEmail);
+  const email = useSelector((state) => state.userEmail)
+   console.log("hello", roles)
+
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
@@ -58,17 +64,22 @@ function AddUserMangForm({ onCloseee }) {
 
   useEffect(() => {
     dispatch(fetchRoles(roles));
+    // console.log(roles)
   }, [])
 
   const handleChange = (e) => {
+
     const { name, value, type } = e.target;
+
     if (type === 'file') {
+      // Handle file uploads
       const file = e.target.files[0];
       setFormFieldsss({
         ...formFieldsss,
         [name]: file,
       });
     } else {
+      // Handle other input types
       setFormFieldsss({
         ...formFieldsss,
         [name]: value,
@@ -86,11 +97,23 @@ function AddUserMangForm({ onCloseee }) {
     const newCity = e.target.value;
     setSelectedCity(newCity);
   };
-  const { username, password } = formState;
+
+  // const handleRoleChnage=(e)=>{
+  // const newRole=e.target.value;
+  // setSelectedRoles(newRole);
+
+  // }
+
+  const { username, password } = formState; // Assuming your form state contains these values
+
+
+
   const handleUserSubmit = async (e) => {
     e.preventDefault();
+
     const stateName = states.find(state => state.state_id === parseInt(selectedState))?.state_name || '';
     const cityName = cities.find(city => city.city_id === parseInt(selectedCity))?.city_name || '';
+
     const updatedFormFields = {
       ...formFieldsss,
       state: stateName,
@@ -98,9 +121,10 @@ function AddUserMangForm({ onCloseee }) {
       gender: selectedGender,
       roles_name: selectedRoles
     };
+
     dispatch(sendUserForm(updatedFormFields));
 
-    //    dispatch(sendLoginCredentials({ first_name: formFieldsss.first_name, email_id: formFieldsss.email_id })); // Dispatch action to send email
+//    dispatch(sendLoginCredentials({ first_name: formFieldsss.first_name, email_id: formFieldsss.email_id })); // Dispatch action to send email
 
     setShowSuccessPopup(true);
     //onCloseee();
@@ -140,7 +164,7 @@ function AddUserMangForm({ onCloseee }) {
   }, [navigate]);
 
   const handleDashboard = () => {
-    setShowSuccessPopup(false);
+    setShowSuccessPopup(false); // Close the popup when navigating away
   };
 
   const validateEmail = (value) => {
@@ -151,16 +175,19 @@ function AddUserMangForm({ onCloseee }) {
   const validateDateOfBirth = (value) => {
     const dobRegex = /^\d{4}-\d{2}-\d{2}$/;
     const [year] = value.split('-');
+
+    // Check if the date format is correct and if the year part contains exactly four digits
     return dobRegex.test(value) && year.length === 4 ? "" : "Invalid date of birth";
   };
 
   const validateMobileNumber = (value) => {
-    const isValid = /^\d{10}$/.test(value);
+    const isValid = /^\d{10}$/.test(value); // Assumes a 10-digit mobile number
     return isValid ? "" : "Invalid mobile number";
   };
 
+  // Validation function for Aadhar number (example)
   const validateAadharNumber = (value) => {
-    const isValid = /^\d{12}$/.test(value);
+    const isValid = /^\d{12}$/.test(value); // Assumes a 12-digit Aadhar number
     return isValid ? "" : "Invalid Aadhar number";
   };
   useEffect(() => {
@@ -168,17 +195,31 @@ function AddUserMangForm({ onCloseee }) {
       const timeoutId = setTimeout(() => {
         onCloseee();
         setShowSuccessPopup(false);
-      }, 2000);
+      }, 2000); // Wait for 2 seconds (2000 milliseconds) before closing the popup
       return () => clearTimeout(timeoutId);
     }
   }, [showSuccessPopup, onCloseee]);
 
+  // const validateMarks = (value) => {
+  //   const marks = parseFloat(value);
+
+  //   if (marks < 80) {
+  //     return 'Marks should be above 80% to proceed further.';
+  //   }
+
+  //   return '';
+  // };
+
+
   return (
-    <div className='relative bg-custom-color mt-5 ml-[-320px] w-screen-full  md:ml-[-500px] lg:ml-[-610px] lg:mr-17 xl:mr-[320px] xl:ml-[-950px]  rounded-lg border-4 border-white popup-content grid justify-items-start'>
+
+    <div className='relative bg-custom-color mt-5 ml-[-320px] w-screen-full  md:ml-[-500px] lg:ml-[-770px] mr-16 xl:ml-[-950px]  rounded-lg border-4 border-white popup-content grid justify-items-start'>
       <div className="self-stretch flex flex-col bg-color items-start justify-start max-w-full text-start text-xl text-black font-poppins">
+
+
         <form onSubmit={handleUserSubmit}
           className="w-[280px]   mx-0 mt-4 m-0 md:mx-0 md:px-3  md:mt-8  lg:mx-0 lg:mt-5 lg:justify-center md:pt-4 lg:pr-24" >
-          <div className="flex flex-col mx-2  lg:flex-row space-y-4 lg:space-y-0 pb-3  ">
+           <div className="flex flex-col mx-2  lg:flex-row space-y-4 lg:space-y-0 pb-3 ">
             <TextField
               label="First Name"
               name="first_name"
@@ -190,6 +231,7 @@ function AddUserMangForm({ onCloseee }) {
               disabled={false}
               className="w-full md:w-1/2 lg:w-1/4"
             />
+
             <div className="lg:mx-8" >
               <TextField
                 label="Last Name"
@@ -200,11 +242,14 @@ function AddUserMangForm({ onCloseee }) {
                 onChange={handleChange}
                 required={true}
                 disabled={false}
-                className="w-full md:w-1/2 lg:w-1/4 "
+                className="w-full md:w-1/2 lg:w-1/4"
               />
             </div>
           </div>
+
+
           <div className="flex flex-col mx-2  lg:flex-row space-y-4 lg:space-y-0 pb-3">
+
             <TextField
               label="Email ID"
               name="email_id"
@@ -217,6 +262,7 @@ function AddUserMangForm({ onCloseee }) {
               validate={validateEmail}
             />
             <div className="lg:mx-8" >
+
               <TextField
                 className="w-[130px] [border:none] [outline:none] font-poppins text-xs bg-[transparent] h-[18px] relative text-gray-300 whitespace-pre-wrap text-left inline-block"
                 label="Communication Address line 1"
@@ -230,9 +276,9 @@ function AddUserMangForm({ onCloseee }) {
               />
             </div>
           </div>
-          <div className="flex flex-col mx-2 lg:flex-row space-y-4 lg:space-y-0 pb-3">
+          <div className="flex flex-col mx-4  lg:flex-row space-y-4 lg:space-y-0 pb-3">
             <div className="self-stretch flex flex-col items-start justify-start pt-0 px-0 text-white gap-[5px_0px]">
-              <div className="w-[130px] relative font-semibold inline-block z-[1]">
+              <div className="w-[232px] relative font-semibold inline-block z-[1]">
                 State
               </div>
               <div className="self-stretch rounded-lg bg-white overflow-hidden flex flex-row items-start justify-between  pb-0.5 pr-6 pl-3 whitespace-nowrap gap-[20px] z-[1] text-xs text-gray-300 border-[1px] border-solid border-color1">
@@ -241,13 +287,18 @@ function AddUserMangForm({ onCloseee }) {
                   value={selectedState}
                   onChange={handleStateChange}>
                   <option value="">Select State</option>
+                  {/*{states.map((state) => (
+                    <option key={state.state_id} value={state.state_id}>
+                      {state.state_name}
+                    </option>
+                  ))}*/}
                   {states
-                    .filter(state => state.status === 0)
-                    .map(state => (
-                      <option key={state.state_id} value={state.state_id}>
-                        {state.state_name}
-                      </option>
-                    ))}
+                  .filter(state => state.status === 0) 
+                  .map(state => (
+                  <option key={state.state_id} value={state.state_id}>
+                    {state.state_name}
+                  </option>
+                  ))}
                 </select>
 
               </div>
@@ -260,14 +311,19 @@ function AddUserMangForm({ onCloseee }) {
                 </div>
                 <div className="self-stretch rounded-lg bg-white overflow-hidden flex flex-row items-start justify-between pt-[1px] pb-0.5 pr-6 pl-3 whitespace-nowrap gap-[20px] z-[1] border-[1px] border-solid border-color1">
                   <select
-                    className="w-130 [border:none] [outline:none] bg-whitesmoke self-stretch h-[51px] rounded-[8.08px] flex flex-row items-center justify-start pt-3 px-[0px] pb-4 box-border font-poppins text-mini-1 text-color min-w-[315px]  "
+                    className="w-full [border:none] [outline:none] bg-whitesmoke self-stretch h-[51px] rounded-[8.08px] flex flex-row items-center justify-start pt-3 px-[0px] pb-4 box-border font-poppins text-mini-1 text-color min-w-[315px]  "
                     value={selectedCity}
                     onChange={handleCityChange}>
                     <option value="">Select City</option>
-                    {cities.filter(city => city.status === 0).map(city => (
+                    {/*{cities.map((city) => (
                       <option key={city.city_id} value={city.city_id}>
                         {city.city_name}
                       </option>
+                    ))}*/}
+                    {cities.filter(city => city.status === 0).map(city => (
+                    <option key={city.city_id} value={city.city_id}>
+                      {city.city_name}
+                    </option>
                     ))}
                   </select></div>
               </div>
@@ -284,6 +340,7 @@ function AddUserMangForm({ onCloseee }) {
               required={true}
               disabled={false}
             />
+
             <div className="lg:mx-8" >
               <TextField
                 label="Adhaar no"
@@ -298,6 +355,9 @@ function AddUserMangForm({ onCloseee }) {
                 className="w-full md:w-1/2 lg:w-1/4"
               />
             </div>
+
+
+
           </div>
           <div className="flex flex-col ml-2  lg:flex-row space-y-4 lg:space-y-0 md:space-y-0 pb-3 md:ml-[10px] lg:gap-5 ">
             <div className="self-stretch flex flex-col items-start justify-start pt-0 px-0 text-white gap-[5px_0px]">
@@ -311,13 +371,20 @@ function AddUserMangForm({ onCloseee }) {
                   onChange={(e) => setSelectedRoles(e.target.value)}
                 >
                   <option value="">Select Roles</option>
+                  {/*{roles.map((roles) => ( 
+                    <option key={roles.roles_id} value={roles.roles_name}> 
+                      {roles.roles_name} 
+                    </option>
+                  ))}*/}
                   {roles.filter(roles => roles.status === 0).map(roles => (
                     <option key={roles.roles_id} value={roles.roles_name}>
                       {roles.roles_name}
                     </option>
-                  ))}
+                    ))}
                 </select>
+
               </div>
+
             </div>
             <div className="lg:mx-8 " >
               <div className="self-stretch flex flex-col md:flex flex-row items-start justify-start gap-[5px_0px] text-lg text-white">
@@ -333,10 +400,12 @@ function AddUserMangForm({ onCloseee }) {
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
+
                   </select></div>
               </div>
             </div>
           </div>
+
           <div className="flex flex-col mx-2  lg:flex-row space-y-4 lg:space-y-0 pb-3">
             <DatePicker
               label="Date of Birth"
@@ -345,6 +414,7 @@ function AddUserMangForm({ onCloseee }) {
               required={true}
               validate={validateDateOfBirth}
             />
+
             <div className="lg:mx-28  pt-2 lg:ml-[120px]" >
               <TextField
                 className="w-[130px] [border:none] [outline:none] font-poppins text-xs bg-[transparent] h-[18px] relative text-gray-300 whitespace-pre-wrap text-left inline-block"
@@ -358,6 +428,7 @@ function AddUserMangForm({ onCloseee }) {
                 disabled={false}
                 validate={validateMobileNumber}
               />
+
               <div className='mt-4'>
                 <TextField
                   label="profession"
@@ -373,6 +444,10 @@ function AddUserMangForm({ onCloseee }) {
               </div>
             </div>
           </div>
+
+
+
+
           {error && <div className="text-red-500">Error: {error.message}</div>}
           <div className="md:grid grid-flow-col  ">
             <div className="w-[453px] mx-5 lg:mx-[300px] flex flex-row items-start justify-start py-0 pr-0 pt-12 pb-10 box-border max-w-full">
@@ -382,7 +457,8 @@ function AddUserMangForm({ onCloseee }) {
                     Submit
                   </b>
                 </button>
-                <button onClick={onCloseee} className="cursor-pointer my-2 [border:none] pt-[13px] px-[13px] pb-3.5 bg-white flex-1 rounded-lg shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] overflow-hidden flex flex-row items-center justify-center box-border min-w-[130px] hover:bg-darkslategray lg:mr-3 ">
+
+                <button onClick={onCloseee} className="cursor-pointer my-2 [border:none] pt-[13px] px-[13px] pb-3.5 bg-white flex-1 rounded-lg shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] overflow-hidden flex flex-row items-center justify-center box-border min-w-[130px] hover:bg-darkslategray ">
                   <b className="w-[152px] relative text-base-2 inline-block font-poppins text-black text-center shrink-0">
                     Cancel
                   </b>
@@ -393,7 +469,7 @@ function AddUserMangForm({ onCloseee }) {
           {showSuccessPopup && (
             <div
               className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50"
-              onClick={() => setShowSuccessPopup(false)}
+              onClick={() => setShowSuccessPopup(false)} // Hide the pop-up on click
             >
               <div className="bg-white rounded-lg p-8">
                 <p className="text-black text-center">Successfully submitted.</p>
@@ -401,16 +477,20 @@ function AddUserMangForm({ onCloseee }) {
               </div>
             </div>
           )}
+
           {/*  {emailSent && (
       <p>Email has been successfully sent.</p>
     )}
     {emailError && (
       <p>Error in sending email: {emailError.message}</p>
     )} */}
+
           {error && <div className="text-red-500">Error: {error.message}</div>}
         </form>
       </div>
     </div>
+
+
   )
 }
 

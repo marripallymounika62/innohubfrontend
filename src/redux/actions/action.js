@@ -507,82 +507,15 @@ export const fetchUsers = () => async (dispatch) => {
   }
 };
 
-export const deactivateUserId = (user_id) => async (dispatch) => {
-  // dispatch({ type: DEACTIVATE_USER_REQUEST });
-
-  try {
-      const response = await axios.put(`/api/usermanage/${user_id}/deactivate`);
-      dispatch({
-          type: 'DEACTIVATE_USER_SUCCESS',
-          payload: response.data.message,
-      });
-  } catch (error) {
-      dispatch({
-          type: 'DEACTIVATE_USER_FAIL',
-           payload: error.response ? error.response.data.error : 'An error occurred',
-          payload:error.message,
-      });
-  }
-};
- 
-// export const editUserId= (updatedUserdata,user_id) => async (dispatch) => {
-//   // dispatch({ type: DEACTIVATE_USER_REQUEST });
-
-//   try {
-//       const response = await axios.put(`/api/usermanage/${user_id}`,updatedUserdata);
-//       dispatch({
-//           type: 'EDIT_USER_SUCCESS',
-//           payload: response.data.message,
-//       });
-//   } catch (error) {
-//       dispatch({
-//           type: 'EDIT_USER_FAIL',
-//           // payload: error.response ? error.response.data.error : 'An error occurred',
-//           payload:error.message,
-//       });
-//   }
-// };
-
-export const editUserId= (updatedUserdata,user_id) => async (dispatch) => {
-  // dispatch({ type: DEACTIVATE_USER_REQUEST });
-
-  try {
-      const response = await axios.put(`/api/usermanage/${user_id}/`,updatedUserdata);
-      dispatch({
-          type: 'EDIT_USER_SUCCESS',
-          payload: response.data.message,
-      });
-  } catch (error) {
-      dispatch({
-          type: 'EDIT_USER_FAIL',
-           payload: error.response ? error.response.data.error : 'An error occurred',
-          payload:error.message,
-      });
-  }
-};
-
-
-// // export const editUserId = (userData, user_id) => async (dispatch) => {
-//   try {
-//     const response = await api.put(`/users/${user_id}`, userData);
-//     dispatch({ type: 'EDIT_USER_SUCCESS', payload: response.data });
-//     return response.data;
-//   } catch (error) {
-//     dispatch({ type: 'EDIT_USER_FAIL', error });
-//     throw error;
-//   }
-// };
-
-
 export const updateStudentById = (updateStudentData, id) => async (dispatch) => {
   try {
     const response = await axios.put(`/api/students/${id}`, updateStudentData);
     const studentData = response.data;
-     console.error('Student updated', studentData);
+    console.error('Student updated', studentData);
     toast.success("You have successfully updated Student");
     dispatch({
       type: ActionTypes.EDIT_STUDENT,
-       payload: studentData
+      payload: studentData
     });
   } catch (error) {
     console.error(error);
@@ -748,7 +681,7 @@ export const deactivateRole = (rolesId) => async (dispatch) => {
   try {
     const response = await axios.delete(`/api/roles/${rolesId}/deactivate`);
     if (response.status === 200) {
-      // toast.success(`You have successfully  Role Id ${rolesId}`);
+      toast.success(`You have successfully deactivated Role Id ${rolesId}`);
       dispatch({
         type: ActionTypes.DEACTIVATE_ROLE_SUCCESS,
         payload: rolesId,
@@ -760,7 +693,6 @@ export const deactivateRole = (rolesId) => async (dispatch) => {
     console.error('Error while deactivating role:', error);
   }
 };
-
 
 export const uploadNewRole = (newRoleData) => async (dispatch) => {
   try {

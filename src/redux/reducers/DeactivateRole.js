@@ -14,7 +14,7 @@ const DeactivateRole = (state = initialState, { type, payload }) => {
             return { ...state, status: 1 };
           }
           return state;
-        })
+        })   
       };
     default:
       return state;
